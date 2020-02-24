@@ -1,0 +1,1813 @@
+SQL> create table Emp
+  2  (Empno number(4) not null,
+  3  Ename varchar2(10),
+  4  job varchar2(9),
+  5  mgr number(4),
+  6  hiredate date,
+  7  sal number(7,2),
+  8  comm number(7,2),
+  9  dept_no number(2)
+  10  );
+
+Table created.
+
+SQL> create table Designation_Master
+  2  (Design_code number(3) not null,
+  3  Design_name varchar(50)
+  4  );
+
+Table created.
+
+SQL> create table Department_Master
+  2  (Dept_Code number(2) not null,
+  3  Dept_name varchar(50)
+  4  );
+
+Table created.
+
+SQL> create table Student_Master
+  2  (Student_Code number(6) not null,
+  3  Student_name varchar(50) not null,
+  4  Dept_Code number(2),
+  5  Student_dob date,
+  6  Student_Address varchar(240)
+  7  );
+
+Table created.
+
+SQL> create table Student_Marks
+  2  (Student_Code number(6)not null,
+  3  Student_Year number not null,
+  4  Subject1 number(3),
+  5  Subject2 number(3),
+  6  Subject3 number(3)
+  7  );
+
+Table created.
+
+SQL> create table Staff_Master
+  2  (Staff_code number(8)not null,
+  3  Staff_name varchar(50)not null,
+  4  Design_code number not null,
+  5  Dept_code number ,
+  6  HireDate date,
+  7  Staff_dob date,
+  8  Staff_Address varchar(240),
+  9  Mgr_code number(8),
+ 10  Staff_sal number(10,2)
+ 11  );
+
+Table created.
+
+SQL> create table Book_Master
+  2  (Book_Code number(10) not null,
+  3  Book_name varchar(50)not null,
+  4  Book_pub_year number,
+  5  Book_pub_author varchar(50) not null
+  6  );
+
+Table created.
+
+SQL> create table Book_Transactions
+  2  (Book_code number,
+  3  Student_code number,
+  4  Staff_code number,
+  5  Book_issue_date date not null,
+  6  Book_expected_return_date date not null,
+  7  Book_actual_return_date date
+  8  );
+
+Table created.
+
+SQL> insert into staff_master values(500004,'Himani',1,12,'01-Dec-2002','19-Mar-1995','Hawai Purplecity Mumbai',80062,16000);
+
+1 row created.
+
+
+
+LAB 1.1----------------->
+
+SQL> select staff_name as name, design_code as designation_No from staff_master where hiredate<='01-Jan-2003' and staff_sal between 12000 and 25000;
+
+NAME                                               DESIGNATION_NO               
+-------------------------------------------------- --------------               
+Himani                                                          1               
+
+SQL> insert into staff_master values(500005,'John',4,14,'11-Feb-1973','09-Apr-1895','Navi Mumbai',80063,24000);
+
+1 row created.
+
+SQL> select staff_name as name, design_code as designation_No from staff_master where hiredate<='01-Jan-2003' and staff_sal between 12000 and 25000;
+
+NAME                                               DESIGNATION_NO               
+-------------------------------------------------- --------------               
+Himani                                                          1               
+John                                                            4               
+
+SQL> select stafF_code,staff_name, dept_code from staff_master where sysdate-hiredate>=18;
+
+STAFF_CODE STAFF_NAME                                          DEPT_CODE        
+---------- -------------------------------------------------- ----------        
+    500002 Biology                                                    12        
+    500003 Himani                                                     13        
+    500004 Himani                                                     12        
+    500005 John                                                       14        
+
+SQL> insert into staff_master values(500006,'Siya',3,15,'08-Mar-2002','19-Jul-1992','Raj Heights Pune',null,22000);
+
+1 row created.
+
+SQL> select * from staff_master where mgr_code is null;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500006 Siya                                                         3       
+        15 08-MAR-02 19-JUL-92                                                  
+Raj Heights Pune                                                                
+                22000                                                           
+                                                                                
+
+SQL> select * from book_master where book_pub_year between 2001 and 2004 and book_name like'%&%';
+
+no rows selected
+
+SQL> insert into book_master values(1235,'Hello & Welcome',2002,'Malone');
+Enter value for welcome: Welcome
+old   1: insert into book_master values(1235,'Hello & Welcome',2002,'Malone')
+new   1: insert into book_master values(1235,'Hello Welcome',2002,'Malone')
+
+1 row created.
+
+SQL> insert into book_master values(1236,'People',2003,'Perry');
+
+1 row created.
+
+SQL> select * from book_master where book_pub_year between 2001 and 2004 and book_name like'%&%';
+
+no rows selected
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500002 Biology                                                      1       
+        12 19-JAN-02 12-NOV-06                                                  
+Hitech Ghaziabad                                                                
+     80061    6541188                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500003 Himani                                                       1       
+        13 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062    6738291                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500004 Himani                                                       1       
+        12 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062      16000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500005 John                                                         4       
+        14 11-FEB-73 09-APR-95                                                  
+Navi Mumbai                                                                     
+     80063      24000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500006 Siya                                                         3       
+        15 08-MAR-02 19-JUL-92                                                  
+Raj Heights Pune                                                                
+                22000                                                           
+                                                                                
+SQL> insert into staff_master values(500007,'Silver',3,12,'13-Mar-2008','19-Apr-1995','Navi Pune',null,26000);
+
+1 row created.
+
+SQL> select stafF_code,staff_name, dept_code from staff_master where sysdate-hiredate>=18;
+
+STAFF_CODE STAFF_NAME                                          DEPT_CODE        
+---------- -------------------------------------------------- ----------        
+    500002 Biology                                                    12        
+    500003 Himani                                                     13        
+    500004 Himani                                                     12        
+    500005 John                                                       14        
+    500006 Siya                                                       15        
+    500007 Silver                                                     12        
+
+6 rows selected.
+
+SQL> insert into staff_master values(500008,'Nice_goodman',2,15,'23-Apr-2007','31-Mar-1975','Hello Hyderabad',80064,25000);
+
+1 row created.
+
+SQL> select staff_name from staff_master where staff_name like '%_%';
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+Biology                                                                         
+Himani                                                                          
+Himani                                                                          
+John                                                                            
+Siya                                                                            
+Silver                                                                          
+Nice_goodman                                                                    
+
+7 rows selected.
+
+SQL> select staff_name from staff_master where staff_name like '_%';
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+Biology                                                                         
+Himani                                                                          
+Himani                                                                          
+John                                                                            
+Siya                                                                            
+Silver                                                                          
+Nice_goodman                                                                    
+
+7 rows selected.
+
+SQL> select staff_name from staff_master where staff_name like '%[_]%';
+
+no rows selected
+
+SQL> select staff_name from staff_master where staff_name like '%!_%' escape'!';
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+Nice_goodman                                                                    
+
+SQL> select stafF_code,staff_name, dept_code from staff_master where (extract(year from sysdate)- extract(year from hiredate))>=18 order by (extract(year from sysdate)-extract(year from hiredate));
+
+STAFF_CODE STAFF_NAME                                          DEPT_CODE        
+---------- -------------------------------------------------- ----------        
+    500002 Biology                                                    12        
+    500003 Himani                                                     13        
+    500006 Siya                                                       15        
+    500004 Himani                                                     12        
+    500005 John                                                       14        
+
+SQL> set define off;
+
+SQL> insert into book_master values(1237,'People&Problems',2001,'Malti');
+
+1 row created.
+
+SQL> select * from book_master where book_pub_year between 2001 and 2004 and book_name like'%&%';
+
+ BOOK_CODE BOOK_NAME                                          BOOK_PUB_YEAR     
+---------- -------------------------------------------------- -------------     
+BOOK_PUB_AUTHOR                                                                 
+--------------------------------------------------                              
+      1237 People&Problems                                             2001     
+Malti                                                                           
+                                                                                
+
+LAB 2.1----------------------->
+
+SQL> select staff_name, LPAD(Staff_sal,15,'$') from staff_master;
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+LPAD(STAFF_SAL,15,'$')                                                          
+------------------------------------------------------------                    
+Biology                                                                         
+$$$$$$$$6541188                                                                 
+                                                                                
+Himani                                                                          
+$$$$$$$$6738291                                                                 
+                                                                                
+Himani                                                                          
+$$$$$$$$$$16000                                                                 
+                                                                                
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+LPAD(STAFF_SAL,15,'$')                                                          
+------------------------------------------------------------                    
+John                                                                            
+$$$$$$$$$$24000                                                                 
+                                                                                
+Siya                                                                            
+$$$$$$$$$$22000                                                                 
+                                                                                
+Silver                                                                          
+$$$$$$$$$$26000                                                                 
+                                                                                
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+LPAD(STAFF_SAL,15,'$')                                                          
+------------------------------------------------------------                    
+Nice_goodman                                                                    
+$$$$$$$$$$25000                                                                 
+                                                                                
+
+7 rows selected.
+
+SQL> SELECT STAFF_NAME,ROUND(MONTHS_BETWEEN(SYSDATE,HIREDATE)) AS MONTHS_WORKED FROM STAFF_MASTER ORDER BY Months_worked desc;
+
+STAFF_NAME                                         MONTHS_WORKED                
+-------------------------------------------------- -------------                
+John                                                         564                
+Biology                                                      217                
+Siya                                                         215                
+Himani                                                       206                
+Himani                                                       206                
+Nice_goodman                                                 154                
+Silver                                                       143                
+
+7 rows selected.
+
+SQL> select student_name,to_char(STUDENT_DOB,'MONTH DD YYYY') AS STUDENT_DOB from STUDENT_MASTER where to_char(STUDENT_DOB,'DAY') LIKE  ('%SATURDAY%') OR to_char(STUDENT_DOB,'DAY') LIKE  ('%SUNDAY%') ;
+
+STUDENT_NAME                                                                    
+--------------------------------------------------                              
+STUDENT_DOB                                                                     
+--------------------------------------------                                    
+Riya                                                                            
+MAY       20 2000                                                               
+                                                                                
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from student_master;
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE      
+------------ -------------------------------------------------- ----------      
+STUDENT_D                                                                       
+---------                                                                       
+STUDENT_ADDRESS                                                                 
+--------------------------------------------------------------------------------
+       10011 Harman                                                     12      
+19-NOV-98                                                                       
+H-345 pink city hyderabad                                                       
+                                                                                
+       10012 Riya                                                       14      
+20-MAY-00                                                                       
+B-3 Hello Heights Bangalore                                                     
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE      
+------------ -------------------------------------------------- ----------      
+STUDENT_D                                                                       
+---------                                                                       
+STUDENT_ADDRESS                                                                 
+--------------------------------------------------------------------------------
+                                                                                
+       10013 Mihir                                                      13      
+01-APR-97                                                                       
+D-12 Rishabh Appts Delhi                                                        
+                                                                                
+
+LAB 2.2----------------------------->
+
+SQL> select staff_name,round(months_between(sysdate,hiredate)) as months_worked from staff_master order by months_worked;
+
+STAFF_NAME                                         MONTHS_WORKED                
+-------------------------------------------------- -------------                
+Silver                                                       143                
+Nice_goodman                                                 154                
+Himani                                                       206                
+Himani                                                       206                
+Siya                                                         215                
+Biology                                                      217                
+John                                                         564                
+
+7 rows selected.
+
+SQL> select * from staff_master where to_char(hiredate,'DD') between 1 and 15 and to_char(hiredate,'month') like '%december%';
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500003 Himani                                                       1       
+        13 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062    6738291                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500004 Himani                                                       1       
+        12 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062      16000                                                           
+                                                                                
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by to_char(hiredate,'DAY') desc;
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+
+7 rows selected.
+
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by to_char(hiredate,'DAY');
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+
+7 rows selected.
+
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by day;
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+
+7 rows selected.
+
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by day desc;
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+
+7 rows selected.
+
+SQL> SELECT STAFF_NAME,TO_CHAR(HIREDATE,'DD MONTH YYYY') AS HIRE_DATE,TO_CHAR(HIREDATE,'DAY')AS DAY FROM STAFF_MASTER ORDER BY TO_CHAR(HIREDATE,'DAY') DESC;
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+HIRE_DATE                                                                       
+--------------------------------------------                                    
+DAY                                                                             
+------------------------------------                                            
+Silver                                                                          
+13 MARCH     2008                                                               
+THURSDAY                                                                        
+                                                                                
+Himani                                                                          
+01 DECEMBER  2002                                                               
+SUNDAY                                                                          
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+HIRE_DATE                                                                       
+--------------------------------------------                                    
+DAY                                                                             
+------------------------------------                                            
+                                                                                
+Himani                                                                          
+01 DECEMBER  2002                                                               
+SUNDAY                                                                          
+                                                                                
+John                                                                            
+11 FEBRUARY  1973                                                               
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+HIRE_DATE                                                                       
+--------------------------------------------                                    
+DAY                                                                             
+------------------------------------                                            
+SUNDAY                                                                          
+                                                                                
+Biology                                                                         
+19 JANUARY   2002                                                               
+SATURDAY                                                                        
+                                                                                
+Nice_goodman                                                                    
+
+STAFF_NAME                                                                      
+--------------------------------------------------                              
+HIRE_DATE                                                                       
+--------------------------------------------                                    
+DAY                                                                             
+------------------------------------                                            
+23 APRIL     2007                                                               
+MONDAY                                                                          
+                                                                                
+Siya                                                                            
+08 MARCH     2002                                                               
+FRIDAY                                                                          
+                                                                                
+
+7 rows selected.
+
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by
+  2  instr(day,'Monday') asc;
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+
+7 rows selected.
+
+SQL> select staff_name, hiredate, to_char(hiredate,'DAY')as day from staff_master order by
+  2  instr(day,'monday') desc;
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Biology                                            19-JAN-02                    
+SATURDAY                                                                        
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+Himani                                             01-DEC-02                    
+SUNDAY                                                                          
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+Nice_goodman                                       23-APR-07                    
+MONDAY                                                                          
+                                                                                
+Siya                                               08-MAR-02                    
+FRIDAY                                                                          
+                                                                                
+Silver                                             13-MAR-08                    
+THURSDAY                                                                        
+                                                                                
+
+STAFF_NAME                                         HIREDATE                     
+-------------------------------------------------- ---------                    
+DAY                                                                             
+------------------------------------                                            
+John                                               11-FEB-73                    
+SUNDAY                                                                          
+                                                                                
+
+7 rows selected.
+
+SQL> select instr('Mississippi','i',2,3) from dual;
+
+INSTR('MISSISSIPPI','I',2,3)                                                    
+----------------------------                                                    
+                           8                                                    
+                                               
+
+SQL> select to_char(next_day(sysdate,'Tuesday'),'fmDdspth "of" month,YYYY')
+  2  as day
+  3  from dual
+  4  where next_day(sysdate,'Tuesday')<Last_Day(sysdate);
+
+DAY                                                                             
+-----------------------------------------------------------                     
+Eighteenth of february,2020                                                     
+
+SQL> select student_code, student_name, decode(dept_code,20,'Electricals',30,'Electronics','Others') department_name from student_master;
+
+STUDENT_CODE STUDENT_NAME                                       DEPARTMENT_     
+------------ -------------------------------------------------- -----------     
+       10011 Harman                                             Others          
+       10012 Riya                                               Others          
+       10013 Mihir                                              Others          
+
+
+SQL> select * from student_master;
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE      
+------------ -------------------------------------------------- ----------      
+STUDENT_D                                                                       
+---------                                                                       
+STUDENT_ADDRESS                                                                 
+--------------------------------------------------------------------------------
+       10011 Harman                                                     12      
+19-NOV-98                                                                       
+H-345 pink city hyderabad                                                       
+                                                                                
+       10012 Riya                                                       14      
+20-MAY-00                                                                       
+B-3 Hello Heights Bangalore                                                     
+
+STUDENT_CODE STUDENT_NAME                                        DEPT_CODE      
+------------ -------------------------------------------------- ----------      
+STUDENT_D                                                                       
+---------                                                                       
+STUDENT_ADDRESS                                                                 
+--------------------------------------------------------------------------------
+                                                                                
+       10013 Mihir                                                      13      
+01-APR-97                                                                       
+D-12 Rishabh Appts Delhi                                                        
+                                                                                
+
+SQL> select * from department_master;
+
+ DEPT_CODE DEPT_NAME                                                            
+---------- --------------------------------------------------                   
+        12 Sales                                                                
+        13 Testing                                                              
+        14 Admin                                                                
+        15 HR                                                                   
+
+                                   
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500002 Biology                                                      1       
+        12 19-JAN-02 12-NOV-06                                                  
+Hitech Ghaziabad                                                                
+     80061    6541188                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500003 Himani                                                       1       
+        13 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062    6738291                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500004 Himani                                                       1       
+        12 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062      16000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500005 John                                                         4       
+        14 11-FEB-73 09-APR-95                                                  
+Navi Mumbai                                                                     
+     80063      24000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500006 Siya                                                         3       
+        15 08-MAR-02 19-JUL-92                                                  
+Raj Heights Pune                                                                
+                22000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500007 Silver                                                       3       
+        12 13-MAR-08 19-APR-95                                                  
+Navi Pune                                                                       
+                26000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500008 Nice_goodman                                                 2       
+        15 23-APR-07 31-MAR-75                                                  
+Hello Hyderabad                                                                 
+     80064      25000                                                           
+                                                                                
+
+7 rows selected.
+
+SQL> select round(max(staff_sal)) as Maximum, round(min(staff_sal)) as Minimum,round(sum(staff_sal)) as Total ,round(avg(staff_sal)) as Average, dept_code from staff_master group by dept_code;
+
+   MAXIMUM    MINIMUM      TOTAL    AVERAGE  DEPT_CODE                          
+---------- ---------- ---------- ---------- ----------                          
+   6738291    6738291    6738291    6738291         13                          
+     24000      24000      24000      24000         14                          
+   6541188      16000    6583188    2194396         12                          
+     25000      22000      47000      23500         15                          
+
+
+SQL> select dept_code , count(mgr_code) from staff_master group by dept_code;
+
+ DEPT_CODE COUNT(MGR_CODE)                                                      
+---------- ---------------                                                      
+        13               1                                                      
+        14               1                                                      
+        12               2                                                      
+        15               1                                                      
+
+
+SQL> select count(mgr_code) as Total_No_of_Managers, dept_code from staff_master group by dept_code;
+
+TOTAL_NO_OF_MANAGERS  DEPT_CODE                                                 
+-------------------- ----------                                                 
+                   1         13                                                 
+                   1         14                                                 
+                   2         12                                                 
+                   1         15                                                 
+
+
+SQL> select * from staff_master;
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500002 Biology                                                      1       
+        12 19-JAN-02 12-NOV-06                                                  
+Hitech Ghaziabad                                                                
+     80061    6541188                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500003 Himani                                                       1       
+        13 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062    6738291                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500004 Himani                                                       1       
+        12 01-DEC-02 19-MAR-95                                                  
+Hawai Purplecity Mumbai                                                         
+     80062      16000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500005 John                                                         4       
+        14 11-FEB-73 09-APR-95                                                  
+Navi Mumbai                                                                     
+     80063      24000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500006 Siya                                                         3       
+        15 08-MAR-02 19-JUL-92                                                  
+Raj Heights Pune                                                                
+                22000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500007 Silver                                                       3       
+        12 13-MAR-08 19-APR-95                                                  
+Navi Pune                                                                       
+                26000                                                           
+                                                                                
+
+STAFF_CODE STAFF_NAME                                         DESIGN_CODE       
+---------- -------------------------------------------------- -----------       
+ DEPT_CODE HIREDATE  STAFF_DOB                                                  
+---------- --------- ---------                                                  
+STAFF_ADDRESS                                                                   
+--------------------------------------------------------------------------------
+  MGR_CODE  STAFF_SAL                                                           
+---------- ----------                                                           
+    500008 Nice_goodman                                                 2       
+        15 23-APR-07 31-MAR-75                                                  
+Hello Hyderabad                                                                 
+     80064      25000                                                           
+                                                                                
+
+7 rows selected.
+
+
+SQL> insert into staff_master values(500009,'Sasha',4,14,'19-Feb-2009','12-Jun-1986','Silica Valley Ghaziabad',500009,356478);
+
+1 row created.
+
+SQL> insert into staff_master values(500011,'Sumit',3,13,'29-Mar-2015','24-Jul-1982','Pure Ghaziabad',500011,6536478);
+
+1 row created.  
+
+SQL> select dept_code, sum(staff_sal) as total from staff_master where mgr_code= staff_code group by dept_code;
+
+ DEPT_CODE      TOTAL                                                           
+---------- ----------                                                           
+        13    6536478                                                           
+        14     356478                                                        
+
+LAB 3.1------------------------------> 
+
+
+SQL> select s.staff_name,s.staff_sal,d.dept_code,d.dept_name from staff_master s,department_master d where s.dept_code=d.dept_code and staff_sal>20000;
+
+STAFF_NAME                                          STAFF_SAL  DEPT_CODE        
+-------------------------------------------------- ---------- ----------        
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Biology                                               6541188         12        
+Sales                                                                           
+                                                                                
+Himani                                                6738291         13        
+Testing                                                                         
+                                                                                
+John                                                    24000         14        
+Admin                                                                           
+                                                                                
+
+STAFF_NAME                                          STAFF_SAL  DEPT_CODE        
+-------------------------------------------------- ---------- ----------        
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Siya                                                    22000         15        
+HR                                                                              
+                                                                                
+Silver                                                  26000         12        
+Sales                                                                           
+                                                                                
+Nice_goodman                                            25000         15        
+HR                                                                              
+                                                                                
+
+STAFF_NAME                                          STAFF_SAL  DEPT_CODE        
+-------------------------------------------------- ---------- ----------        
+DEPT_NAME                                                                       
+--------------------------------------------------                              
+Sasha                                                  356478         14        
+Admin                                                                           
+                                                                                
+Sumit                                                 6536478         13        
+Testing                                                                         
+                                                                                
+
+8 rows selected.
+
+SQL> SELECT S.STUDENT_CODE,S.STUDENT_NAME,B.BOOK_CODE,BB.BOOK_NAME FROM STUDENT_MASTER S, BOOK_TRANSACTIONS B,  BOOK_MASTER BB WHERE S.STUDENT_CODE=B.STUDENT_CODE AND TO_CHAR(B.BOOK_EXPECTED_RETURN_DATE,'DD MM YYYY') LIKE TO_CHAR(SYSDATE,'DD MM YYYY');
+
+no rows selected
+
+SQL> SELECT Staff_Code, Staff_Name,STAFF_SAL  FROM STAFF_MASTER WHERE STAFF_SAL<(SELECT AVG(STAFF_SAL) FROM STAFF_MASTER);
+
+STAFF_CODE STAFF_NAME                                          STAFF_SAL        
+---------- -------------------------------------------------- ----------        
+    500004 Himani                                                  16000        
+    500005 John                                                    24000        
+    500006 Siya                                                    22000        
+    500007 Silver                                                  26000        
+    500008 Nice_goodman                                            25000        
+
+
+LAB 4.1----------------------->
+
+SQL> create table Customer
+  2  (
+  3  CustomerId number(5),
+  4  Cust_Name varchar2(20),
+  5  Address1 varchar2(30),
+  6  Address2 varchar2(30)
+  7  );
+
+Table created.
+
+SQL> alter table customer rename column cust_name to Customername;
+
+Table altered.
+
+SQL> alter table customer rename column customername to cust_name;
+
+Table altered.
+
+SQL> alter table customer rename column cust_name to CusomerName;
+
+Table altered.
+
+SQL> alter table customer add Gender varchar2(1);
+
+Table altered.
+
+SQL> alter table customer add Age number(3);
+
+Table altered.
+
+SQL> alter table customer add PhoneNo number(10);
+
+Table altered.
+
+SQL> rename Customer to Cust_Table;
+
+Table renamed.
+
+SQL>  insert into Cust_Table values(1000,'Allen','#115 Chicago','#115 Chicago','M',25,7878776);
+
+1 row created.
+
+SQL>  insert into Cust_Table values(1001,'George','#116 France','#116 France','M',25,434524);
+
+1 row created.
+
+SQL> insert into Cust_Table values(1002,'Becker','#114 New York','#114 New York','M',45,431525);
+
+1 row created.
+
+SQL> Alter table cust_table add constraint Custid_prim PRIMARY KEY (customerid);
+
+Table altered.
+
+SQL> alter table cust_table drop constraint custid_prim;
+
+Table altered.
+
+SQL> insert into Cust_Table values(1002,'Becker','#114 New York','#114 New York','M',45,439525);
+
+1 row created.
+
+SQL>  insert into Cust_Table values(1003,'Nanapatekar','#115 India','#115 India','M',45,431525);
+
+1 row created.
+
+SQL> select * from cust_table;
+
+CUSTOMERID CUSOMERNAME          ADDRESS1                                        
+---------- -------------------- ------------------------------                  
+ADDRESS2                       G        AGE    PHONENO                          
+------------------------------ - ---------- ----------                          
+      1000 Allen                #115 Chicago                                    
+#115 Chicago                   M         25    7878776                          
+                                                                                
+      1001 George               #116 France                                     
+#116 France                    M         25     434524                          
+                                                                                
+      1002 Becker               #114 New York                                   
+#114 New York                  M         45     431525                          
+                                                                                
+
+CUSTOMERID CUSOMERNAME          ADDRESS1                                        
+---------- -------------------- ------------------------------                  
+ADDRESS2                       G        AGE    PHONENO                          
+------------------------------ - ---------- ----------                          
+      1002 Becker               #114 New York                                   
+#114 New York                  M         45     439525                          
+                                                                                
+      1003 Nanapatekar          #115 India                                      
+#115 India                     M         45     431525                          
+                                                                                
+
+SQL> truncate table cust_table;
+
+Table truncated.
+
+SQL> alter table cust_table  add E_mail varchar2(30);
+
+Table altered.
+
+SQL> alter table cust_table drop column e_mail;
+
+Table altered.
+
+SQL> create table Suppliers
+  2  (
+  3  CustomerId number(5),
+  4  CustomerName varchar2(20),
+  5  Address1 varchar2(30),
+  6  Address2 varchar2(30),
+  7  PhoneNo number(10)
+  8  );
+
+Table created.
+
+SQL> alter table suppliers rename column customerid to suppid;
+
+Table altered.
+
+SQL> alter table suppliers rename column customername to sname;
+
+Table altered.
+
+SQL> alter table suppliers rename column Address1 to Addr1;
+
+Table altered.
+
+SQL> alter table suppliers rename column Address2 to Addr2;
+
+Table altered.
+
+SQL> alter table suppliers rename column phoneno to contactno;
+
+Table altered.
+
+SQL> select * from suppliers;
+
+no rows selected
+
+SQL> drop table suppliers;
+
+Table dropped.
+
+SQL> create table CustomerMaster
+  2  (
+  3  CustomerId number(5),
+  4  CustomerName varchar2(30) not null,
+  5  Address1 varchar2(30) not null,
+  6  Address2 varchar2(30),
+  7  Gender varchar2(1),
+  8  Age number(3),
+  9  PhoneNo number(10)
+ 10  );
+
+Table created.
+
+SQL> alter table customermaster add constraint custid_pk primary key(customerid);
+
+Table altered.
+
+SQL> create table AccountMaster
+  2  (
+  3  CustomerId number(5),
+  4  Accountno decimal(10,2),
+  5  AccountType char(3),
+  6  LedgerBalance decimal(10,2) not null
+  7  );
+
+Table created.
+
+SQL> rename accountmaster to Accountsmaster;
+
+Table renamed.
+
+SQL> alter table accountsmaster add constraint acc_pk primary key(accountno);
+
+Table altered.
+
+SQL> Alter table Accountsmaster ADD constraint cust_acc FOREIGN KEY(customerid) REFERENCES customermaster(customerid);
+
+Table altered.
+
+SQL> Insert into customermaster values(1000,'Allen', '#115 Chicago', '#115 Chicago','M', 25, 7878776);
+
+1 row created.
+
+SQL> Insert into customermaster values(1001,'George', '#116 France', '#116 France','M', 25, 434524);
+
+1 row created.
+
+SQL> Insert into customermaster values(1002,'Becker', '#114 New York', '#114 New York','M', 45, 431525);
+
+1 row created.
+
+SQL>  alter table Accountsmaster add constraint ck_ac check(accounttype='NRI' or accounttype='IND');
+
+Table altered.
+
+SQL> alter table Accountsmaster add constraint Balance_check check(ledgerbalance > 5000);
+
+Table altered.
+
+SQL> Create table accountdetails as select * from Accountsmaster;
+
+Table created.
+
+SQL> create table departmentmaster(deptno number(38),Dname varchar2(25),location varchar2(25));
+
+Table created.
+
+SQL> insert into departmentmaster  values(123,'MARKETING','Bangalore');
+
+1 row created.
+
+SQL> insert into departmentmaster  values(124,'SALES','Pune');
+
+1 row created.
+
+SQL> insert into departmentmaster  values(125,'Research','Ghaziabad');
+
+1 row created.
+
+SQL> create sequence SEQ_DEPT
+  2  start with 40
+  3  increment by 40
+  4  minvalue 40
+  5  maxvalue 200
+  6  cache 40;
+
+Sequence created.
+
+SQL> DROP sequence seq_dept;
+
+Sequence dropped.
+
+
+LAB 5.1------------------------------->
+
+SQL> create table Employee as select * from Emp where 1=3;
+
+Table created.
+
+SQL> desc Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(10)
+ JOB                                                VARCHAR2(50)
+ MGR                                                NUMBER(4)
+ HIREDATE                                           DATE
+ SAL                                                NUMBER(7,2)
+ COMM                                               NUMBER(7,2)
+ DEPTNO                                             NUMBER(2)
+
+
+
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7369,'SMITH',800,20);
+
+1 row created.
+
+SQL> select * from employee;
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7369 SMITH                                                                
+                            800                    20                           
+                                                                                
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7499,'ALLEN',1600,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7521,'WARD',1250,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7566,'JONES',2975,20);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7654,'MARTIN',1250,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7698,'BLAKE',2850,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7782,'CLARK',2450,10);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7788,'SCOTT',3000,20);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7839,'KING',5000,10);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7844,'TURNER',1500,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7876,'ADAMS',1100,20);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7900,'JAMES',950,30);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7902,'FORD',3000,20);
+
+1 row created.
+
+SQL> insert into employee (EMPNO,ENAME,SAL,DEPTNO) values(7934,'MILLER',1300,10);
+
+1 row created.
+
+SQL> select * from employee;
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7369 SMITH                                                                
+                            800                    20                           
+                                                                                
+      7499 ALLEN                                                                
+                           1600                    30                           
+                                                                                
+      7521 WARD                                                                 
+                           1250                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7566 JONES                                                                
+                           2975                    20                           
+                                                                                
+      7654 MARTIN                                                               
+                           1250                    30                           
+                                                                                
+      7698 BLAKE                                                                
+                           2850                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7782 CLARK                                                                
+                           2450                    10                           
+                                                                                
+      7788 SCOTT                                                                
+                           3000                    20                           
+                                                                                
+      7839 KING                                                                 
+                           5000                    10                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7844 TURNER                                                               
+                           1500                    30                           
+                                                                                
+      7876 ADAMS                                                                
+                           1100                    20                           
+                                                                                
+      7900 JAMES                                                                
+                            950                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7902 FORD                                                                 
+                           3000                    20                           
+                                                                                
+      7934 MILLER                                                               
+                           1300                    10                           
+                                                                                
+
+14 rows selected.
+
+
+SQL> update employee set job =(select job from employee where empno=7788),DEPTNO = (select DEPTNO from employee where EMPNO=7788) where EMPNO=7698;
+
+1 row updated.
+
+SQL> select * from employee;
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7369 SMITH                                                                
+                            800                    20                           
+                                                                                
+      7499 ALLEN                                                                
+                           1600                    30                           
+                                                                                
+      7521 WARD                                                                 
+                           1250                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7566 JONES                                                                
+                           2975                    20                           
+                                                                                
+      7654 MARTIN                                                               
+                           1250                    30                           
+                                                                                
+      7698 BLAKE                                                                
+                           2850                    20                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7782 CLARK                                                                
+                           2450                    10                           
+                                                                                
+      7788 SCOTT                                                                
+                           3000                    20                           
+                                                                                
+      7839 KING                                                                 
+                           5000                    10                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7844 TURNER                                                               
+                           1500                    30                           
+                                                                                
+      7876 ADAMS                                                                
+                           1100                    20                           
+                                                                                
+      7900 JAMES                                                                
+                            950                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7902 FORD                                                                 
+                           3000                    20                           
+                                                                                
+      7934 MILLER                                                               
+                           1300                    10                           
+                                                                                
+
+14 rows selected.
+
+
+SQL> update employee set deptno=(select deptno from employee where empno=7788) where empno=7698;
+
+1 row updated.
+
+SQL> insert into employee values(1000,'Allen', 'Clerk',1001,'12-jan-01',3000,2,10);
+
+1 row created.
+
+SQL>  insert into employee values(1001,'George', 'Analyst',null,'08-Sep-92',5000,0,10);
+
+1 row created.
+
+SQL>  insert into employee values(1002,'Becker', 'Manager',1000,'04-NOV-92',2800,4,20);
+
+1 row created.
+
+SQL>  insert into employee values(1003,'Bill', 'Clerk',1002,'04-Nov-92',3000,0,20);
+
+1 row created.
+
+SQL> select * from employee;
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7369 SMITH                                                                
+                            800                    20                           
+                                                                                
+      7499 ALLEN                                                                
+                           1600                    30                           
+                                                                                
+      7521 WARD                                                                 
+                           1250                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7566 JONES                                                                
+                           2975                    20                           
+                                                                                
+      7654 MARTIN                                                               
+                           1250                    30                           
+                                                                                
+      7698 BLAKE                                                                
+                           2850                    20                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7782 CLARK                                                                
+                           2450                    10                           
+                                                                                
+      7788 SCOTT                                                                
+                           3000                    20                           
+                                                                                
+      7839 KING                                                                 
+                           5000                    10                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7844 TURNER                                                               
+                           1500                    30                           
+                                                                                
+      7876 ADAMS                                                                
+                           1100                    20                           
+                                                                                
+      7900 JAMES                                                                
+                            950                    30                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      7902 FORD                                                                 
+                           3000                    20                           
+                                                                                
+      7934 MILLER                                                               
+                           1300                    10                           
+                                                                                
+      1000 Allen      Clerk                                                     
+      1001 12-JAN-01       3000          2         10                           
+                                                                                
+
+     EMPNO ENAME      JOB                                                       
+---------- ---------- --------------------------------------------------        
+       MGR HIREDATE         SAL       COMM     DEPTNO                           
+---------- --------- ---------- ---------- ----------                           
+      1001 George     Analyst                                                   
+           08-SEP-92       5000          0         10                           
+                                                                                
+      1002 Becker     Manager                                                   
+      1000 04-NOV-92       2800          4         20                           
+                                                                                
+      1003 Bill       Clerk                                                     
+      1002 04-NOV-92       3000          0         20                           
+                                                                                
+
+18 rows selected.
+
+
+LAB 6.1-------------------------------->
+
+
+
+
+
+SQL> create table Customer
+  2  (
+  3  CustomerId number(4) primary key,
+  4  CustomerName varchar2(20),
+  5  Address1 varchar2(30),
+  6  Address2 varchar2(30),
+  7  Gender varchar2(1),
+  8  Age number(3),
+  9  Phoneno number(13),
+ 10  Shapping_Amount Decimal(5,2)
+ 11  );
+
+Table created.
+
+SQL> desc Customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMERID                                NOT NULL NUMBER(4)
+ CUSTOMERNAME                                       VARCHAR2(20)
+ ADDRESS1                                           VARCHAR2(30)
+ ADDRESS2                                           VARCHAR2(30)
+ GENDER                                             VARCHAR2(1)
+ AGE                                                NUMBER(3)
+ PHONENO                                            NUMBER(13)
+ SHOPPING_AMOUNT                                    NUMBER(7,2)
+
+SQL> insert into Customer values(6000,'John','#115 Chicago','#115 Chicago','M',25,7878776,10000);
+
+1 row created.
+
+SQL> insert into Customer values(6001,'Jack','#116 France','#116 France','M',25,434524,20000);
+
+1 row created.
+
+SQL> insert into Customer values(6002,'James','#114 New York','#114 New York','M',45,431525,15000.50);
+
+1 row created.
+
+SQL> Savepoint SP1;
+
+Savepoint created.
+
+SQL> insert into Customer values(6003,'John','#114 Chicago','#114 Chicago','M',45,439525,19000.60);
+
+1 row created.
+
+SQL> select * from Customer;
+
+CUSTOMERID CUSTOMERNAME         ADDRESS1                                        
+---------- -------------------- ------------------------------                  
+ADDRESS2                       G        AGE    PHONENO SHOPPING_AMOUNT          
+------------------------------ - ---------- ---------- ---------------          
+      6000 John                 #115 Chicago                                    
+#115 Chicago                   M         25    7878776           10000          
+                                                                                
+      6001 Jack                 #116 France                                     
+#116 France                    M         25     434524           20000          
+                                                                                
+      6002 James                #114 New York                                   
+#114 New York                  M         45     431525         15000.5          
+                                                                                
+
+CUSTOMERID CUSTOMERNAME         ADDRESS1                                        
+---------- -------------------- ------------------------------                  
+ADDRESS2                       G        AGE    PHONENO SHOPPING_AMOUNT          
+------------------------------ - ---------- ---------- ---------------          
+      6003 John                 #114 Chicago                                    
+#114 Chicago                   M         45     439525         19000.6          
+                                                                                
+SQL> Rollback to SP1;
+
+Rollback complete.
+
+SQL> select * from Customer;
+
+CUSTOMERID CUSTOMERNAME         ADDRESS1                                        
+---------- -------------------- ------------------------------                  
+ADDRESS2                       G        AGE    PHONENO SHOPPING_AMOUNT          
+------------------------------ - ---------- ---------- ---------------          
+      6000 John                 #115 Chicago                                    
+#115 Chicago                   M         25    7878776           10000          
+                                                                                
+      6001 Jack                 #116 France                                     
+#116 France                    M         25     434524           20000          
+                                                                                
+      6002 James                #114 New York                                   
+#114 New York                  M         45     431525         15000.5          
+                                                                                
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
+
